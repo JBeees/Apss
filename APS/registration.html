@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <div class="SignUp-container">
+        <h2>SignUP</h2>
+        <form id="SignForm">
+            <div class="input-group">
+                <label for="FullName">Fullname</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Enter your Full Name" required>
+            </div>
+            <div class="input-group">
+                <label for="Email">Email</label>
+                <input type="text" id="email" name="email" placeholder="Enter your Email" required>
+            </div>
+            <div class="input-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone Number" required>
+            </div>
+            <button type="button" id="signButton" style="margin-bottom :10px">Sign Up</button>
+        </form>
+        <button type="button" id="haveAccountButton">Have Account</button>
+        <p id="errorMessage" class="error-message"></p>
+    </div>
+    <script src="registration.js"></script>
+</body>
+
+</html>
