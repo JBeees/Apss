@@ -1,47 +1,56 @@
-document.getElementById('haveAccountButton').addEventListener('click', function (event) {
-    window.location.href = 'login.html';
-});
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+import { get, ref } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCS7bOqQoFUK7K-A0ieVh6-0j0KD-zKu_U",
-    authDomain: "apss-8c1a3.firebaseapp.com",
-    projectId: "apss-8c1a3",
-    storageBucket: "apss-8c1a3.firebasestorage.app",
-    messagingSenderId: "1066731704855",
-    appId: "1:1066731704855:web:3d3879a1e5f9fd09244252",
-    measurementId: "G-W60N20EG23"
+    apiKey: "AIzaSyAnjoScF9_AAf0GR23PbsE1uGk_Sd6rkqA",
+    authDomain: "apscuy-62e59.firebaseapp.com",
+    databaseURL: "https://apscuy-62e59-default-rtdb.firebaseio.com",
+    projectId: "apscuy-62e59",
+    storageBucket: "apscuy-62e59.firebasestorage.app",
+    messagingSenderId: "307732212682",
+    appId: "1:307732212682:web:4087c2a39ebe8ade50fd33",
+    measurementId: "G-GR5EH32WVJ"
+
 };
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-console.log("Firebase initialized:", app);
-document.getElementById('signButton').addEventListener('click', async () => {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const phoneNumber = document.getElementById('phoneNumber').value;
-    const password = document.getElementById('password').value;
 
-    if (username && email && phoneNumber && password) {
-        try {
-            await db.collection('users').add({
-                username: username,
-                email: email,
-                password: password,
-                phoneNumber: phoneNumber,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getDatabase(app);
+const apsDB = ref(db, "apscuy");
+document.getElementById("SignForm").addEventListener("submit", regisForm);
 
-            alert('User registered successfully!');
-            document.getElementById('username').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('phoneNumber').value = '';
-            document.getElementById('password').value = '';
-        } catch (error) {
-            console.error('Error adding user data:', error);
-            alert('Failed to register user. Please try again.');
-        }
-    } else {
-        alert('Please fill in all fields.');
-    }
-});
+function regisForm(e) {
+    e.preventDefault();
+    var username = getElementVal('username');
+    var email = getElementVal('email');
+    var phoneNumber = getElementVal('phoneNumber');
+    var password = getElementVal('password');
+    console.log(username, email, phoneNumber, password);
+    saveData(username, email, phoneNumber, password)
+    window.location.href = 'core.html';
+    document.getElementById("SignForm").reset();
+}
+
+const saveData = (username, email, phoneNumber, password) => {
+    const tes = push(apsDB);
+    set(tes, {
+        username: username,
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password
+    })
+        .then(() => {
+            console.log("Data saved successfully!");
+        })
+        .catch((error) => {
+            console.error("Error saving data: ", error);
+        });
+}
+
+const getElementVal = (id) => {
+    return document.getElementById(id).value;
+}
 

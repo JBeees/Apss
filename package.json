@@ -1,0 +1,23 @@
+{
+  "name": "apss",
+  "version": "1.0.0",
+  "description": "WEB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JBeees/Apss.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JBeees/Apss/issues"
+  },
+  "homepage": "https://github.com/JBeees/Apss#readme",
+  "dependencies": {
+    "firebase": "^11.0.2"
+  }
+}
