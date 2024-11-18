@@ -1,7 +1,7 @@
+import { getCurrentUser } from "./registration.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
-import { get, ref } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAnjoScF9_AAf0GR23PbsE1uGk_Sd6rkqA",
@@ -12,11 +12,22 @@ const firebaseConfig = {
     messagingSenderId: "307732212682",
     appId: "1:307732212682:web:4087c2a39ebe8ade50fd33",
     measurementId: "G-GR5EH32WVJ"
-
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getDatabase(app);
 const apsDB = ref(db, "apscuy");
+function getData() {
+    onValue(apsDB, (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            const userData = childSnapshot.val();
+            if (userData.username === getCurrentUser()) {
+                usernameShow.textContent = userData.username;
+                emailShow.textContent = userData.email;
+                phoneShow.textContent = userData.phoneNumber;
+            }
+        });
+    });
+
+}

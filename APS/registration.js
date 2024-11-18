@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
-import { get, ref } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAnjoScF9_AAf0GR23PbsE1uGk_Sd6rkqA",
@@ -12,7 +11,6 @@ const firebaseConfig = {
     messagingSenderId: "307732212682",
     appId: "1:307732212682:web:4087c2a39ebe8ade50fd33",
     measurementId: "G-GR5EH32WVJ"
-
 };
 
 // Initialize Firebase
@@ -21,7 +19,7 @@ const analytics = getAnalytics(app);
 const db = getDatabase(app);
 const apsDB = ref(db, "apscuy");
 document.getElementById("SignForm").addEventListener("submit", regisForm);
-
+var currentUser = ""
 function regisForm(e) {
     e.preventDefault();
     var username = getElementVal('username');
@@ -30,9 +28,14 @@ function regisForm(e) {
     var password = getElementVal('password');
     console.log(username, email, phoneNumber, password);
     saveData(username, email, phoneNumber, password)
-    window.location.href = 'core.html';
+    currentUser = username;
     document.getElementById("SignForm").reset();
+    window.location.href = 'core.html';
 }
+function getCurrentUser() {
+    return currentUser;
+}
+export { getCurrentUser };
 
 const saveData = (username, email, phoneNumber, password) => {
     const tes = push(apsDB);
