@@ -12,23 +12,13 @@
 
         <!-- Bagian Alamat Pengiriman -->
         <div class="shipping-info">
-            <h3>Alamat Pengiriman</h3>
+            <h3>Pengiriman</h3>
             <p>Nama: <strong>Fufufafa</strong></p>
-            <!--div class="checkbox">
-                <input type="checkbox" id="emailOffer" checked>
-                <label for="emailOffer">Terima penawaran menarik melalui email</label>
-            </div-->
 
             <div class="warning">
                 <p>Pastikan lokasi pertemuan tidak berubah</p>
             </div>
 
-            <form id="shippingForm">
-                <input type="text" placeholder="Nama" required>
-                <!--input type="text" placeholder="" required-->
-                <input type="text" placeholder="Lama Peminjaman (2 hari)">
-                <input type="text" placeholder="Lokasi Pertemuan" required>
-            </form>
         </div>
 
         <!-- Ringkasan Pesanan -->
@@ -47,40 +37,26 @@
             </div>
         </div>
 
-        <!-- Bagian Pembayaran -->
         <div class="payment-section">
             <h3>Pembayaran/Konfirmasi Akhir</h3>
             <form id="paymentForm">
-                <div class="payment-method">
-                    <input type="radio" name="paymentMethod" id="creditCard" value="creditCard">
-                    <label for="creditCard">Kartu Kredit atau Debit</label>
-                </div>
-
-                <div id="creditCardFields" class="hidden">
-                    <input type="text" placeholder="Nomor Kartu" id="cardNumber">
-                    <input type="text" placeholder="Tanggal Kadaluwarsa (MM/YY)" id="expiryDate">
-                    <input type="text" placeholder="Kode Keamanan" id="securityCode">
-                    <input type="text" placeholder="Nama Pemilik Kartu" id="cardHolderName">
-                </div>
-
-                <div class="payment-method">
-                    <input type="radio" name="paymentMethod" id="otherMethod" value="otherMethod">
-                    <label for="otherMethod">Metode Pembayaran Lainnya</label>
-                </div>
-
-                <select id="otherPayments" class="hidden">
-                    <option value="" disabled selected>Pilih Metode Pembayaran</option>
-                    <option value="gopay">GoPay</option>
-                    <option value="ovo">OVO</option>
-                    <option value="shopeepay">ShopeePay</option>
-                    <option value="dana">Dana</option>
+                <select id="pembayaran" class="hidden">
+                    <option value="" disabled selected>Metode Pembayaran</option>
+                    <option value="BCA">Transfer BCA</option>
+                    <option value="Bank Mandiri">Transfer Bank Mandiri</option>
+                    <option value="BRI">Transfer BRI</option>
+                    <option value="BNI">Transfer BNI</option>
+                    <option value="GoPay">GoPay</option>
+                    <option value="OVO">OVO</option>
+                    <option value="ShopeePay">ShopeePay</option>
+                    <option value="Dana">Dana</option>
                 </select>
             </form>
         </div>
 
-        <button id="payButton">Bayar Sekarang</button>
+        <button type="button" id="tombolBayar">Bayar Sekarang</button>
     </div>
 
-    <script src="pembayaran.js"></script>
+    <script type="module" src="pembayaran.js"></script>
 </body>
 </html>
