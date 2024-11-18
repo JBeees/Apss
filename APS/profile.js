@@ -1,6 +1,4 @@
-import { getCurrentUser } from "./registration.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
 const firebaseConfig = {
@@ -14,20 +12,25 @@ const firebaseConfig = {
     measurementId: "G-GR5EH32WVJ"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const apsDB = ref(db, "apscuy");
-function getData() {
+var currentUser = localStorage.getItem("currentUser");
+function setData() {
     onValue(apsDB, (snapshot) => {
         snapshot.forEach((childSnapshot) => {
             const userData = childSnapshot.val();
-            if (userData.username === getCurrentUser()) {
+            if (userData.username === currentUser) {
+                const usernameShow = document.getElementById('usernameShow');
+                const emailShow = document.getElementById('emailShow');
+                const phoneShow = document.getElementById('phoneShow'); 
                 usernameShow.textContent = userData.username;
                 emailShow.textContent = userData.email;
                 phoneShow.textContent = userData.phoneNumber;
             }
         });
     });
-
 }
+window.onload = function() {
+    setData(); 
+};

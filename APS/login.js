@@ -1,8 +1,6 @@
-import { currentUser } from "./profile.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
-import { get } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAnjoScF9_AAf0GR23PbsE1uGk_Sd6rkqA",
@@ -28,6 +26,4 @@ document.getElementById('createAccountButton').addEventListener('click', functio
 document.getElementByIdB("loginForm").addEventListener("submit", reloadData);
 function reloadData(e) {
     e.preventDefault();
-    const username=document.getElementById()
-    
 }

@@ -1,5 +1,4 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
 const firebaseConfig = {
@@ -13,14 +12,11 @@ const firebaseConfig = {
     measurementId: "G-GR5EH32WVJ"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getDatabase(app);
 const apsDB = ref(db, "apscuy");
 document.getElementById("SignForm").addEventListener("submit", regisForm);
-var currentUser = ""
-function regisForm(e) {
+function regisForm(e) { 
     e.preventDefault();
     var username = getElementVal('username');
     var email = getElementVal('email');
@@ -28,14 +24,10 @@ function regisForm(e) {
     var password = getElementVal('password');
     console.log(username, email, phoneNumber, password);
     saveData(username, email, phoneNumber, password)
-    currentUser = username;
-    document.getElementById("SignForm").reset();
+    localStorage.setItem("currentUser", username);
     window.location.href = 'core.html';
+    document.getElementById("SignForm").reset();
 }
-function getCurrentUser() {
-    return currentUser;
-}
-export { getCurrentUser };
 
 const saveData = (username, email, phoneNumber, password) => {
     const tes = push(apsDB);
