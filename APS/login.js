@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAnjoScF9_AAf0GR23PbsE1uGk_Sd6rkqA",
@@ -13,17 +12,26 @@ const firebaseConfig = {
     measurementId: "G-GR5EH32WVJ"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getDatabase(app);
-const apsDB = ref(db, "apscuy");
-
-document.getElementById('createAccountButton').addEventListener('click', function (event) {
-    window.location.href = 'registration.html';
-});
-
-document.getElementByIdB("loginForm").addEventListener("submit", reloadData);
-function reloadData(e) {
+const auth = getAuth(app);
+document.getElementById("loginForm").addEventListener("submit", loginForm);
+function loginForm(e) {
     e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            window.location.href = "core.html";
+            alert("berhasil")
+        })
+        .catch((error) => {
+            console.error("Login failed:", error.message);
+            alert("Login failed. Please check your email and password.");
+        });
 }
+
+
+document.getElementById("createAccountButton").addEventListener("click", function (event) {
+    window.location.href = "registration.html";
+});
