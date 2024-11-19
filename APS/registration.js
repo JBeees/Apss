@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAnjoScF9_AAf0GR23PbsE1uGk_Sd6rkqA",
@@ -14,51 +14,51 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const usersRef = ref(db, "users");
 const auth = getAuth();
+const db = getFirestore(app);
 
-document.getElementById("SignForm").addEventListener("submit", regisForm);
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("SignForm").addEventListener("submit", regisForm);
 
-function regisForm(e) {
+    document.getElementById("haveAccountButton").addEventListener("click", () => {
+        window.location.href = "login.html";
+    });
+});
+
+async function regisForm(e) {
     e.preventDefault();
-    const username = getElementVal("username");
-    const email = getElementVal("email");
-    const password = getElementVal("password");
-    const phoneNumber = getElementVal("phoneNumber");
-    console.log(username, email, phoneNumber);
-    saveUserData(username, email, phoneNumber);
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            alert('login')
-            window.location.href = "core.html";
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+
+    var username = getElementVal("username");
+    var email = getElementVal("email");
+    var password = getElementVal("password");
+    var phoneNumber = getElementVal("phoneNumber");
+
+    // Validate input fields
+    if (!username || !email || !password || !phoneNumber) {
+        alert("All fields are required!");
+        return;
+    }
+
+    try {
+        // Create user with Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Add user data to Firestore
+        const docRef = await addDoc(collection(db, "users"), {
+            username: username,
+            email: email,
+            phoneNumber: phoneNumber,
         });
+
+        alert(`User registered successfully. Document ID: ${docRef.id}`);
+        window.location.href = "core.html";
+    } catch (error) {
+        console.error("Error during registration:", error.code, error.message);
+        alert("Error: " + error.message);
+    }
 }
 
-const saveUserData = (username, email, phoneNumber) => {
-    const newUserRef = push(usersRef);
-    set(newUserRef, {
-        username: username,
-        email: email,
-        phoneNumber: phoneNumber
-    })
-        .then(() => {
-            console.log("User registered successfully!");
-        })
-        .catch((error) => {
-            console.error("Error saving user data:", error);
-        });
-};
-
 const getElementVal = (id) => {
-    return document.getElementById(id).value;
+    return document.getElementById(id)?.value || "";
 };
-
-document.getElementById("haveAccountButton").addEventListener('click', function (event) {
-    window.location.href = "login.html";
-});
