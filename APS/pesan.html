@@ -35,6 +35,7 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('product');
+        const userId = urlParams.get('user');
         const productDetails = {
             1: "Honda Beat",
             2: "Suprax",
@@ -45,7 +46,7 @@
             7: "Ducati",
             8: "Scoopy"
         };
-        document.getElementById('submitOrderButton').setAttribute('href', 'pembayaran.html?product=' + productId);
+        document.getElementById('submitOrderButton').setAttribute('href', 'pembayaran.html?product=' + productId + '&user=' + userId);
         if (productDetails[productId]) {
             document.getElementById('product-name').value = productDetails[productId];
         } else {

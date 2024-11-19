@@ -1,21 +1,20 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
 document.getElementById('tombolBayar').addEventListener('click', function () {
-    // Mengambil elemen select
     const pilihan = document.getElementById('pembayaran');
     const metodePembayaran = pilihan.value;
-
-    // Validasi apakah pengguna sudah memilih metode pembayaran
     if (!metodePembayaran) {
         alert('Silakan pilih metode pembayaran!');
         return;
     }
-
-    // Menampilkan alert dengan metode pembayaran yang dipilih
     alert(`Pembayaran menggunakan ${metodePembayaran} sedang diproses...`);
     setTimeout(() => {
         alert('Pembayaran berhasil!');
-        window.location.href = 'core.html'; // Redirect ke core.html
+        window.location.href = 'core.html?user=' + userId;
     }, 2000);
 });
+
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product');
 const productDetails = {
@@ -59,3 +58,31 @@ function setTotal() {
     tot += priceId[productId];
     return tot;
 }
+const firebaseConfig = {
+    apiKey: "AIzaSyAnjoScF9_AAf0GR23PbsE1uGk_Sd6rkqA",
+    authDomain: "apscuy-62e59.firebaseapp.com",
+    databaseURL: "https://apscuy-62e59-default-rtdb.firebaseio.com",
+    projectId: "apscuy-62e59",
+    storageBucket: "apscuy-62e59.firebasestorage.app",
+    messagingSenderId: "307732212682",
+    appId: "1:307732212682:web:4087c2a39ebe8ade50fd33",
+    measurementId: "G-GR5EH32WVJ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const userId = urlParams.get('user');
+
+getDoc(doc(db, "users", userId)).then(docSnap => {
+    if (docSnap.exists()) {
+        const data = docSnap.data();  
+        document.getElementById("nameSpan").textContent = data.username;
+        document.getElementById("emailSpan").textContent = data.email;
+        document.getElementById("phoneSpan").textContent = data.phoneNumber;
+    } else {
+        console.log("No data found for this user");
+    }
+}).catch(error => {
+    console.log("Error getting document:", error);
+});

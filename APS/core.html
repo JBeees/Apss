@@ -67,7 +67,7 @@
                 <a class="nav-link" href="profile.html" id="profile-button">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="order.html">Sewa Kendaraan</a>
+                <a class="nav-link" href="order.html" id="orderButton">Sewa Kendaraan</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-danger" href="login.html">Logout</a>
@@ -142,7 +142,9 @@
         const urlParams = new URLSearchParams(window.location.search);
         const userId = urlParams.get('user');
         document.getElementById('profile-button').setAttribute('href', 'profile.html?user=' + userId);
+        document.getElementById('orderButton').setAttribute('href', 'order.html?user=' + userId);
     </script>
+    
 </body>
 
 </html>
