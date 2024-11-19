@@ -32,19 +32,14 @@ async function regisForm(e) {
     var email = getElementVal("email");
     var password = getElementVal("password");
     var phoneNumber = getElementVal("phoneNumber");
-
-    // Validate input fields
     if (!username || !email || !password || !phoneNumber) {
         alert("All fields are required!");
         return;
     }
 
     try {
-        // Create user with Firebase Authentication
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-
-        // Add user data to Firestore
         const docRef = await addDoc(collection(db, "users"), {
             username: username,
             email: email,
