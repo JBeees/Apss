@@ -22,7 +22,7 @@ function loginForm(e) {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
-            window.location.href = "core.html";
+            window.location.href = "core.html?user=" + user.uid;
             alert("berhasil")
         })
         .catch((error) => {

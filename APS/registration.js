@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, setDoc, addDoc, collection, doc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAnjoScF9_AAf0GR23PbsE1uGk_Sd6rkqA",
@@ -40,14 +40,13 @@ async function regisForm(e) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        const docRef = await addDoc(collection(db, "users"), {
+        const docRef = await setDoc(doc(db, "users", user.uid), {
             username: username,
             email: email,
             phoneNumber: phoneNumber,
         });
 
-        alert(`User registered successfully. Document ID: ${docRef.id}`);
-        window.location.href = "core.html";
+        window.location.href = "login.html";
     } catch (error) {
         console.error("Error during registration:", error.code, error.message);
         alert("Error: " + error.message);
