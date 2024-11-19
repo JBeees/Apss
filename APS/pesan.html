@@ -13,8 +13,7 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Rental Order Form</h1>
-        
-        <form action="submit-order.html" method="POST">
+        <form>
             <div class="mb-3">
                 <label for="product" class="form-label">Product</label>
                 <input type="text" class="form-control" id="product-name" disabled>
@@ -44,25 +43,26 @@
                 <label for="phone" class="form-label">Your Phone Number</label>
                 <input type="tel" class="form-control" id="phone" required>
             </div>
-
-            <button type="submit" class="btn btn-primary">Submit Order</button>
+            <div class="text-center">
+                <a href="pembayaran.html?product=" class="btn btn-primary" id="submitOrderButton">Submit</a>
+            </div>
         </form>
     </div>
 
     <script>
-        // Get the 'product' query parameter from the URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('product');
-
-        // Example content change based on productId
         const productDetails = {
             1: "Honda Beat",
             2: "Suprax",
             3: "Cafe Racer",
-            4: "Harley Davidson"
+            4: "Harley Davidson",
+            5: "Kawasaki Ninja",
+            6: "Vespa",
+            7: "Ducati",
+            8: "Scoopy"
         };
-
-        // Change the content based on the productId
+        document.getElementById('submitOrderButton').setAttribute('href', 'pembayaran.html?product=' + productId);
         if (productDetails[productId]) {
             document.getElementById('product-name').value = productDetails[productId];
         } else {

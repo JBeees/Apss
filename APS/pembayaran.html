@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rentor</title>
     <link rel="stylesheet" href="pembayaran.css">
 </head>
+
 <body>
     <div class="container">
         <h2>Pembayaran</h2>
@@ -24,23 +26,22 @@
         <!-- Ringkasan Pesanan -->
         <div class="order-summary">
             <div class="item">
-                <img src="ImageSource/beat.png" alt="Item">
+                <img id="imageCore" src="ImageSource/beat.png" alt="Item">
                 <div>
-                    <h4>Motor Beat</h4>
-                    <p>Rp 70.000,00</p>
+                    <h4>Motor: <span id="namaMotor"></span></h4>
+                    <p>Rp <span id="hargaBayar"></span></p>
                 </div>
             </div>
             <div class="total">
-                <p>Subtotal: Rp 70.000,00</p>
-                <p>Ongkos Kirim: Rp 5000,00</p>
-                <h3>Total: Rp 75.000,00</h3>
+                <p>Subtotal: Rp <span id="subTotalHarga"></span></p>
+                <p>Biaya admin: Rp 5000,00</p>
+                <h3>Total: Rp <span id="totalHarga"></span></h3>
             </div>
         </div>
-
         <div class="payment-section">
             <h3>Pembayaran/Konfirmasi Akhir</h3>
             <form id="paymentForm">
-                <select id="pembayaran" class="hidden">
+                <select id="pembayaran">
                     <option value="" disabled selected>Metode Pembayaran</option>
                     <option value="BCA">Transfer BCA</option>
                     <option value="Bank Mandiri">Transfer Bank Mandiri</option>
@@ -53,10 +54,9 @@
                 </select>
             </form>
         </div>
-
         <button type="button" id="tombolBayar">Bayar Sekarang</button>
     </div>
-
     <script type="module" src="pembayaran.js"></script>
 </body>
+
 </html>
