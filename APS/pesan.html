@@ -27,11 +27,13 @@
                 <input type="date" class="form-control" id="end-date" required>
             </div>
             <div class="text-center">
-                <a href="#" class="btn btn-primary" id="submitOrderButton">Submit</a>
+                <a href="#" class="btn btn-primary" style="margin-bottom :10px" id="submitOrderButton">Submit</a>
+            </div>
+            <div class="text-center">
+                <a href="" class="btn btn-primary" id="backButton">Back</a>
             </div>
         </form>
     </div>
-
     <script>
         // Extract query parameters
         const urlParams = new URLSearchParams(window.location.search);
@@ -50,7 +52,7 @@
             8: "Scoopy"
         };
 
-        // Populate product name
+        // Populate product nam e
         if (productDetails[productId]) {
             document.getElementById('product-name').value = productDetails[productId];
         } else {
@@ -80,8 +82,10 @@
             const differenceInMs = end - start;
             const differenceInDays = parseInt((differenceInMs / (60 * 60 * 24)) / 1000);
 
-            // Update the button's href dynamically
             this.setAttribute('href', `pembayaran.html?product=${productId}&user=${userId}&days=${differenceInDays}`);
+        });
+        document.getElementById('backButton').addEventListener('click', function (event) {
+            this.setAttribute('href', `order.html?user=${userId}`);
         });
     </script>
 </body>
