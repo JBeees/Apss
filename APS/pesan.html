@@ -27,15 +27,18 @@
                 <input type="date" class="form-control" id="end-date" required>
             </div>
             <div class="text-center">
-                <a href="pembayaran.html?product=" class="btn btn-primary" id="submitOrderButton">Submit</a>
+                <a href="#" class="btn btn-primary" id="submitOrderButton">Submit</a>
             </div>
         </form>
     </div>
 
     <script>
+        // Extract query parameters
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('product');
         const userId = urlParams.get('user');
+
+        // Product details
         const productDetails = {
             1: "Honda Beat",
             2: "Suprax",
@@ -46,12 +49,40 @@
             7: "Ducati",
             8: "Scoopy"
         };
-        document.getElementById('submitOrderButton').setAttribute('href', 'pembayaran.html?product=' + productId + '&user=' + userId);
+
+        // Populate product name
         if (productDetails[productId]) {
             document.getElementById('product-name').value = productDetails[productId];
         } else {
             document.getElementById('product-name').value = "Product Not Found";
         }
+
+        // Add event listener for the Submit button
+        document.getElementById('submitOrderButton').addEventListener('click', function (event) {
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+
+            if (!startDate || !endDate) {
+                alert("Please select both start and end dates.");
+                event.preventDefault();
+                return;
+            }
+
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+
+            if (end <= start) {
+                alert("End date must be after the start date.");
+                event.preventDefault();
+                return;
+            }
+
+            const differenceInMs = end - start;
+            const differenceInDays = parseInt((differenceInMs / (60 * 60 * 24)) / 1000);
+
+            // Update the button's href dynamically
+            this.setAttribute('href', `pembayaran.html?product=${productId}&user=${userId}&days=${differenceInDays}`);
+        });
     </script>
 </body>
 

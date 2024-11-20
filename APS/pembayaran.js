@@ -48,14 +48,15 @@ const sourceImage = {
     7: "ImageSource/ducati.jpeg",
     8: "ImageSource/scoopy.png"
 }
+const days = parseInt(urlParams.get('days'), 10);
 document.getElementById("imageCore").src = sourceImage[productId];
 document.getElementById("namaMotor").textContent = productDetails[productId];
 document.getElementById("hargaBayar").textContent = priceId[productId];
-document.getElementById("subTotalHarga").textContent = priceId[productId];
-document.getElementById("totalHarga").textContent = setTotal();
-function setTotal() {
+document.getElementById("subTotalHarga").textContent = priceId[productId] + 'x' + days;
+document.getElementById("totalHarga").textContent = setTotal(days);
+function setTotal(days) {
     let tot = 5000;
-    tot += priceId[productId];
+    tot = tot + (priceId[productId] * days);
     return tot;
 }
 const firebaseConfig = {
@@ -76,7 +77,7 @@ const userId = urlParams.get('user');
 
 getDoc(doc(db, "users", userId)).then(docSnap => {
     if (docSnap.exists()) {
-        const data = docSnap.data();  
+        const data = docSnap.data();
         document.getElementById("nameSpan").textContent = data.username;
         document.getElementById("emailSpan").textContent = data.email;
         document.getElementById("phoneSpan").textContent = data.phoneNumber;
